@@ -37,6 +37,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOptional = userRepository.findByEmail(email);
         if(userOptional.isEmpty()) {
             // throw an exception or redirect user to signup
+            return null;
         }
 
         User user = userOptional.get();
@@ -54,6 +55,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOptional = userRepository.findByEmail(email);
         if(userOptional.isPresent()) {
             // throw an exception or redirect user to login
+            return null;
         }
 
         User user = new User();
@@ -79,8 +81,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void logout(String token) {
-        // Home work
+    public void logout(String tokenValue) {
+        Optional<Token> optionalToken = tokenRepository.findByValueAndDeleted(tokenValue, false);
+
+        if (optionalToken.isEmpty()) {
+            //Throw some exception
+        }
+
+        Token token = optionalToken.get();
+
+        token.setDeleted(true);
+        tokenRepository.save(token);
     }
 
     private Token createToken(User user) {
@@ -94,7 +105,8 @@ public class UserServiceImpl implements UserService {
          calendar.add(Calendar.DAY_OF_YEAR, 30);
          Date date30DaysFromToday = calendar.getTime();
 
-         token.setCreatedAt(date30DaysFromToday);
+         token.setExpiryAt(date30DaysFromToday);
+         token.setDeleted(false);
 
          return token;
     }

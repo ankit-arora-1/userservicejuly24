@@ -14,4 +14,6 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
             Boolean deleted,
                  Date date
     );
+
+    Optional<Token> findByValueAndDeleted(String tokenValue, Boolean deleted);
 }

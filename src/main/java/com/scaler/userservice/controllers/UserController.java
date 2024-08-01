@@ -20,7 +20,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public LoginResponseDto login(@RequestBody  LoginRequestDto loginRequestDto) {
+    public LoginResponseDto login(@RequestBody LoginRequestDto loginRequestDto) {
         Token token = userService.login(loginRequestDto.getEmail(), loginRequestDto.getPassword());
         LoginResponseDto responseDto = new LoginResponseDto();
         responseDto.setToken(token);

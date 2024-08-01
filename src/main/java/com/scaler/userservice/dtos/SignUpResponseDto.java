@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SignUpResponseDto {
-    private User user;
+    private User user; // TODO: Remove user model and use email and password
     private ResponseStatus responseStatus;
 }

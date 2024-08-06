@@ -93,6 +93,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User validateToken(String token) {
+        System.out.println("calling validate token");
         Optional<Token> tokenOptional = tokenRepository
                 .findByValueAndDeletedAndExpiryAtGreaterThan(token, false, new Date());
 
